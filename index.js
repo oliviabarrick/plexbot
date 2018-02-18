@@ -1,20 +1,19 @@
 var Botkit = require('botkit');
+var search = require('./search');
+
+var triggers = ['^add (tv|movie) (.*)$'];
+var events = 'direct_mention,direct_message';
 
 var controller = Botkit.slackbot({});
 
 var bot = controller.spawn({
     token: process.env.SLACK_TOKEN
-})
+});
 
 bot.startRTM(function(err, bot, payload) {
     if(err) {
         throw err;
     }
 
-    controller.hears(['^spooky$'], 'direct_mention,direct_message', function(bot, message) {
-	      // default behavior, post as the bot user
-        bot.startConversation(message, function(err, convo) {
-            convo.say('Hello friend :)')
-        })
-    })
-})
+    controller.hears(triggers, events, search.searchHandler);
+});
