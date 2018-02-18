@@ -5,7 +5,11 @@
   "repository": "https://github.com/justinbarrick/slackbot",
   "author": "Justin Barrick <justin.m.barrick@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "botkit": "^0.6.11"
+    "botkit": "^0.6.11",
+    "node-fetch": "^2.0.0"
   }
 }
