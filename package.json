@@ -1,0 +1,11 @@
+{
+  "name": "slackbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/justinbarrick/slackbot",
+  "author": "Justin Barrick <justin.m.barrick@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.6.11"
+  }
+}
