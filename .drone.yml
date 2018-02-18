@@ -2,6 +2,7 @@ pipeline:
   git_push:
     image: appleboy/drone-git-push
     branch: master
+    secrets: [ GIT_PUSH_SSH_KEY ]
     remote: ssh://git@deis-builder.codesink.net:2222/plexbot.git
     force: false
 
