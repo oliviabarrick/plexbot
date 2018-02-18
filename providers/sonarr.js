@@ -1,4 +1,5 @@
 var fetch = require("node-fetch");
+var querystring = require("querystring");
 
 // Send a query to the provider and return the results as an array.
 // A single result item in the array should include:
