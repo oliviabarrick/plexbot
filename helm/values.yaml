@@ -9,8 +9,8 @@ service:
   externalPort: 80
   internalPort: 80
 plexbot:
-  plex_token: ""
-  sonarr_token: ""
+  slack_token: "xoxb-316478973569-Kle69AfNGaFD2tFrjDeYKdLo"
+  sonarr_token: "765f5a5d3a29414782aaa9ed634a7adb"
 ingress:
   enabled: false
   hosts:

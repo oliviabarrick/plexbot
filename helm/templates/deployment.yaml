@@ -22,8 +22,8 @@ spec:
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           env:
-            - name: PLEX_TOKEN
-              value: {{ .Values.plexbot.plex_token }}
+            - name: SLACK_TOKEN
+              value: {{ .Values.plexbot.slack_token }}
             - name: SONARR_TOKEN
               value: {{ .Values.plexbot.sonarr_token }}
           #livenessProbe:
