@@ -7,4 +7,4 @@ COPY package.json /home/node/app/package.json
 RUN npm install
 
 COPY . /home/node/app/packages.json
-CMD "npm start"
+CMD npm start

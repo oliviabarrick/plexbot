@@ -1,0 +1,33 @@
+replicaCount: 1
+image:
+  repository: justinbarrick/plexbot
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  name: plexbot
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 80
+plexbot:
+  plex_token: ""
+  sonarr_token: ""
+ingress:
+  enabled: false
+  hosts:
+    - plexbot.codesink.net
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    external-dns.alpha.kubernetes.io/target: nginx-ingress.codesink.net.
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
+    nginx.ingress.kubernetes.io/auth-tls-secret: "default/cloudflare"
+  tls:
+    - secretName: codesink-origin-ca
+      hosts:
+        - plexbot.codesink.net
+resources: {}
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
