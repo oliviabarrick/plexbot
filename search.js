@@ -11,6 +11,7 @@ function create_attachment(result) {
         text: result.description.slice(0, 250) + "...",
         thumb_url: result.image,
         name: result.title,
+        callback_id: 'add_show',
         actions: [
             {
                 name: 'Add show',
@@ -22,7 +23,7 @@ function create_attachment(result) {
     };
 };
 
-module.exports.searchHandler = async function(bot, message) {
+module.exports.searchHandler = function(bot, message) {
     var type = message.match[1];
     var search = message.match[2];
 
@@ -48,4 +49,6 @@ module.exports.searchHandler = async function(bot, message) {
             convo.ask({ attachments: attachments }, callbacks);
         });
     });
-}
+
+    metrics.completed_searches_count.labels(type).inc();
+};
