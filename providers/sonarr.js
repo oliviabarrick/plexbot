@@ -60,5 +60,13 @@ module.exports.add = async function(show) {
         throw new Error(json.error);
     }
 
+    if(Array.isArray(json)) {
+        json.forEach(function(result) {
+            if(result.error || result.errorMessage) {
+                throw new Error(result.error || result.errorMessage);
+            }
+        });
+    }
+
     return true
 }

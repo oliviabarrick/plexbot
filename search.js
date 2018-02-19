@@ -45,6 +45,7 @@ module.exports.searchHandler = function(bot, message) {
                             convo.gotoThread(result.tvdbid);
                         }).catch(function(err) {
                             convo.setVar("error", err);
+                            convo.gotoThread(result.tvdbid + "_error");
                         });
                     }
                 });
@@ -55,7 +56,7 @@ module.exports.searchHandler = function(bot, message) {
 
                 convo.addMessage({
                     text: "Failed to add " + result.title + "! {{ vars.error }}"
-                }, result.tvdbid);
+                }, result.tvdbid + "_error");
             });
 
             convo.addQuestion({ attachments: attachments }, callbacks);
