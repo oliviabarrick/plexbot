@@ -39,6 +39,7 @@ module.exports.searchHandler = function(bot, message) {
             callbacks.push({
                 pattern: result.tvdbid,
                 callback: function(reply, convo) {
+                    console.log(reply, convo);
                     convo.say("response?");
                     console.log("my callback for " + result.title);
                 }
