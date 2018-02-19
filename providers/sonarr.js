@@ -39,7 +39,21 @@ module.exports.search = async function(query) {
 
 // Create the show.
 // throw an error on error, otherwise returns nothing.
-module.exports.add = function(show) {
+module.exports.add = async function(show) {
+    show.addOptions = {
+        ignoreEpisodesWithFiles: true,
+        ignoreEpisodesWithoutFiles: false,
+        searchForMissingEpisodes: true
+    };
+
+    var res = await fetch("http://" + sonarr + "/api/series", {
+        method: 'POST',
+        body: JSON.stringify(show),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    var json = await res.json();
     console.log('added show "' + show.title + '"');
+    console.log(json);
     return true
 }

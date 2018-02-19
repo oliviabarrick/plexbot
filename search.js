@@ -41,8 +41,9 @@ module.exports.searchHandler = function(bot, message) {
                     pattern: result.tvdbid,
                     callback: function(reply, convo) {
                         metrics.added_count.labels(type).inc();
-                        console.log("my callback for " + result.title);
-                        convo.gotoThread(result.tvdbid);
+                        providers[type].add(result).then(function(res) {
+                            convo.gotoThread(result.tvdbid);
+                        });
                     }
                 });
 
