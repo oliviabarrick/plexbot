@@ -8,13 +8,15 @@ pipeline:
     - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
     when:
       branch: master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   helm_deploy:
     image: justinbarrick/drone-helm
     skip_tls_verify: true
     chart: ./helm
     release: plexbot
-    values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7},plexbot.sonarr_token=${SONARR_TOKEN},plexbot.slack_client_id=${SLACK_CLIENT_ID},plexbot.slack_client_secret=${SLACK_CLIENT_SECRET}
+    values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7},plexbot.sonarr_token=${PROD_SONARR_TOKEN},plexbot.slack_client_id=${PROD_SLACK_CLIENT_ID},plexbot.slack_client_secret=${PROD_SLACK_CLIENT_SECRET}
     secrets: [ PROD_KUBERNETES_CERT, PROD_KUBERNETES_TOKEN, PROD_SERVICE_ACCOUNT, PROD_API_SERVER, PROD_SONARR_TOKEN, PROD_SLACK_CLIENT_ID, PROD_SLACK_CLIENT_SECRET ]
     prefix: PROD
     wait: true
