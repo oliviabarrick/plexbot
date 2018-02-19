@@ -40,7 +40,7 @@ module.exports.searchHandler = function(bot, message) {
                 pattern: result.tvdbid,
                 callback: function(reply, convo) {
                     convo.say("response?");
-                    console.log("my callback");
+                    console.log("my callback for " + result.title);
                 }
             })
         });
