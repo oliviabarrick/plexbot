@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "botkit": "^0.6.11",
-    "node-fetch": "^2.0.0"
+    "node-fetch": "^2.0.0",
+    "prom-client": "^10.2.2"
   }
 }
