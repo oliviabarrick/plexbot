@@ -27,13 +27,13 @@ module.exports.searchHandler = function(bot, message) {
     var type = message.match[1];
     var search = message.match[2];
 
-    var attachments = [];
-    var callbacks = [];
-
     metrics.searches_count.labels(type).inc();
 
     bot.startConversation(message, function(err, convo) {
         providers[type].search(search).then(function(results) {
+            var attachments = [];
+            var callbacks = [];
+
             results.forEach(function(result) {
                 attachments.push(create_attachment(result));
 
@@ -50,10 +50,10 @@ module.exports.searchHandler = function(bot, message) {
                     text: "Adding " + result.title + "..."
                 }, result.tvdbid);
             });
-        });
 
-        convo.addQuestion({ attachments: attachments }, callbacks);
-        convo.activate();
+            convo.addQuestion({ attachments: attachments }, callbacks);
+            convo.activate();
+        });
     });
 
     metrics.completed_searches_count.labels(type).inc();
