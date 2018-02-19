@@ -42,6 +42,8 @@ spec:
               value: "{{ .Values.plexbot.sonarr_profile_id }}"
             - name: SONARR_ROOT_FOLDER
               value: "{{ .Values.plexbot.sonarr_root_folder }}"
+            - name: SONARR_PUBLIC
+              value: "{{ .Values.plexbot.sonarr_public }}"
             - name: PLEXBOT_DATABASE
               value: /plexbot
           livenessProbe:

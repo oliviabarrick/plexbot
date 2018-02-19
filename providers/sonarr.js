@@ -32,6 +32,7 @@ module.exports.search = async function(query) {
         series.tvdbid = series.tvdbId;
         series.imdbid = series.imdbId;
         series.image = series.remotePoster;
+        series.provider_url = process.env.SONARR_PUBLIC + "/series/" + series.titleSlug;
     })
 
     return json;

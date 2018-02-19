@@ -51,7 +51,7 @@ module.exports.searchHandler = function(bot, message) {
                 });
 
                 convo.addMessage({
-                    title: "Added " + result.title + "!"
+                    title: "Added <" + result.provider_url + "|"  + result.title + ">!"
                     thumb: result.image
                 }, result.tvdbid);
 
