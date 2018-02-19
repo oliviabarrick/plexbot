@@ -20,7 +20,12 @@ module.exports.search = async function(query) {
     })
 
     var res = await fetch("http://" + sonarr + "/api/series/lookup?" + qs);
+
+    console.log("sent search");
+
     var json = await res.json();
+
+    console.log(json);
 
     json.forEach(function(series) {
         series.description = series.overview;
