@@ -1,8 +1,8 @@
 var fetch = require("node-fetch");
 var querystring = require("querystring");
+var metrics = require("../metrics");
 
-// var sonarr = "127.0.0.1:8080";
-var sonarr = "sonarr-sonarr.media.svc.cluster.local";
+var sonarr = process.env.SONARR_ADDRESS;
 
 // Send a query to the provider and return the results as an array.
 // A single result item in the array should include:
@@ -19,16 +19,16 @@ module.exports.search = async function(query) {
         apikey: process.env.SONARR_TOKEN
     })
 
+    var start = Date.now();
     var res = await fetch("http://" + sonarr + "/api/series/lookup?" + qs);
-
-    console.log("sent search");
+    metrics.api_latency.labels('sonarr').observe(Date.now() - start);
 
     var json = await res.json();
 
     console.log(json);
 
     json.forEach(function(series) {
-        series.description = series.overview;
+        series.description = series.overview || "";
         series.tvdbid = series.tvdbId;
         series.imdbid = series.imdbId;
         series.image = series.remotePoster;

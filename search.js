@@ -1,10 +1,4 @@
-var prometheus = require('prom-client');
-
-var searches_count = new prometheus.Counter({
-  name: 'searches',
-  help: 'number of searches performed',
-  labelNames: ['type']
-});
+var metrics = require('./metrics');
 
 var providers = {
     'tv': require('./providers/sonarr'),
@@ -35,7 +29,7 @@ module.exports.searchHandler = async function(bot, message) {
     var attachments = [];
     var callbacks = [];
 
-    searches_count.labels(type).inc();
+    metrics.searches_count.labels(type).inc();
 
     providers[type].search(search).then(function(results) {
         results.forEach(function(result) {

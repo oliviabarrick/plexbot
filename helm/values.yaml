@@ -11,6 +11,7 @@ service:
 plexbot:
   slack_token: "xoxb-316478973569-Kle69AfNGaFD2tFrjDeYKdLo"
   sonarr_token: "765f5a5d3a29414782aaa9ed634a7adb"
+  sonarr_address: sonarr-sonarr.media.svc.cluster.local
 ingress:
   enabled: true
   hosts:
