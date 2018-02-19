@@ -37,7 +37,8 @@ var add_show = function(bot, message) {
         bot.replyInteractive(message, {
             attachments: [
                 {
-                    text: "Added <" + to_add.provider_url + "|"  + to_add.title + ">!",
+                    title: "Added <" + to_add.provider_url + "|"  + to_add.title + ">!",
+                    text: to_add.description.slice(0, 250) + "...",
                     thumb_url: to_add.image
                 }
             ]
