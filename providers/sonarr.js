@@ -46,7 +46,7 @@ module.exports.add = async function(show) {
         searchForMissingEpisodes: true
     };
 
-    var res = await fetch("http://" + sonarr + "/api/series", {
+    var res = await fetch("http://" + sonarr + "/api/series?apikey=" + process.env.SONARR_TOKEN, {
         method: 'POST',
         body: JSON.stringify(show),
         headers: { 'Content-Type': 'application/json' },
