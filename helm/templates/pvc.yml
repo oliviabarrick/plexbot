@@ -9,8 +9,8 @@ spec:
     - ReadWriteOnce
   storageClassName: nfs-plexbot-{{ .Release.Name }}
   nfs:
-    server: {{ .Values.plexbot.nfs.server }}
-    path: {{ .Values.plexbot.nfs.path }}
+    server: {{ .Values.nfs.server }}
+    path: {{ .Values.nfs.path }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

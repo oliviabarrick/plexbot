@@ -17,6 +17,7 @@ pipeline:
     values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
     secrets: [ PROD_KUBERNETES_CERT, PROD_KUBERNETES_TOKEN, PROD_SERVICE_ACCOUNT, PROD_API_SERVER ]
     prefix: PROD
+    wait: true
     when:
       branch: master
 
