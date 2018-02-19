@@ -72,7 +72,10 @@ module.exports.searchHandler = function(bot, message) {
             cache.put(result.tvdbid, result, 600000);
         });
 
-        bot.reply(message, { attachments: attachments });
+        bot.reply(message, {
+            text: 'Your results for "' + search + '":',
+            attachments: attachments
+        });
     });
 
     metrics.completed_searches_count.labels(type).inc();
