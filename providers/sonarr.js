@@ -45,6 +45,8 @@ module.exports.add = async function(show) {
         ignoreEpisodesWithoutFiles: false,
         searchForMissingEpisodes: true
     };
+    show.rootFolderPath = process.env.SONARR_ROOT_FOLDER;
+    show.profileId = parseInt(process.env.SONARR_PROFILE_ID);
 
     var res = await fetch("http://" + sonarr + "/api/series?apikey=" + process.env.SONARR_TOKEN, {
         method: 'POST',

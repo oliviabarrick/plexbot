@@ -51,11 +51,13 @@ module.exports.searchHandler = function(bot, message) {
                 });
 
                 convo.addMessage({
-                    text: "Added " + result.title + "!"
+                    title: "Added " + result.title + "!"
+                    thumb: result.image
                 }, result.tvdbid);
 
                 convo.addMessage({
-                    text: "Failed to add " + result.title + "! {{ vars.error }}"
+                    title: "Failed to add " + result.title + "!",
+                    text: "{{ vars.error }}"
                 }, result.tvdbid + "_error");
             });
 

@@ -38,6 +38,10 @@ spec:
               value: {{ .Values.plexbot.sonarr_token }}
             - name: SONARR_ADDRESS
               value: {{ .Values.plexbot.sonarr_address }}
+            - name: SONARR_PROFILE_ID
+              value: "{{ .Values.plexbot.sonarr_profile_id }}"
+            - name: SONARR_ROOT_FOLDER
+              value: "{{ .Values.plexbot.sonarr_root_folder }}"
             - name: PLEXBOT_DATABASE
               value: /plexbot
           livenessProbe:
