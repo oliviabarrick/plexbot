@@ -11,7 +11,7 @@ service:
 plexbot:
   slack_client_id: "292362622870.317002064628"
   slack_client_secret: "ae459e891b82a3deb437b712d783b685"
-  sonarr_token: "765f5a5d3a29414782aaa9ed634a7adb"
+  sonarr_token: ""
   sonarr_address: sonarr-sonarr.media.svc.cluster.local
   sonarr_public: https://sonarr.bossco.de
   sonarr_root_folder: /tv/

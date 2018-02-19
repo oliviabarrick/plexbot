@@ -14,8 +14,8 @@ pipeline:
     skip_tls_verify: true
     chart: ./helm
     release: plexbot
-    values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
-    secrets: [ PROD_KUBERNETES_CERT, PROD_KUBERNETES_TOKEN, PROD_SERVICE_ACCOUNT, PROD_API_SERVER ]
+    values: image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7},plexbot.sonarr_token=${PROD_SONARR_TOKEN}
+    secrets: [ PROD_KUBERNETES_CERT, PROD_KUBERNETES_TOKEN, PROD_SERVICE_ACCOUNT, PROD_API_SERVER, PROD_SONARR_TOKEN ]
     prefix: PROD
     wait: true
     when:
