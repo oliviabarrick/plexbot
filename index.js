@@ -39,6 +39,7 @@ controller.on('create_bot', function(bot, config) {
     bot.startRTM(function(err) {});
 });
 
+controller.on('interactive_message_callback', search.interactiveHandler);
 controller.hears(triggers, events, search.searchHandler);
 
 controller.storage.teams.all(function(err, teams) {

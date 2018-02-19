@@ -1,11 +1,12 @@
 var metrics = require('./metrics');
+var cache = require('memory-cache');
 
 var providers = {
     'tv': require('./providers/sonarr'),
     'movie': require('./providers/couchpotato'),
 }
 
-function create_attachment(result) {
+var create_attachment = function(result) {
     return {
         title: '<http://www.imdb.com/title/' + result.imdbid + "|" + result.title + "> (" + result.year + ")",
         text: result.description.slice(0, 250) + "...",
@@ -23,47 +24,51 @@ function create_attachment(result) {
     };
 };
 
+var add_show = function(bot, message) {
+    var to_add = cache.get(message.actions[0].value);
+
+    if(to_add == null) {
+        bot.replyInteractive(message, "unknown callback");
+    }
+
+    metrics.added_count.labels(to_add.type).inc();
+
+    providers[to_add.type].add(to_add).then(function(res) {
+        bot.replyInteractive(message, {
+            text: "Added <" + to_add.provider_url + "|"  + to_add.title + ">!",
+            thumb: to_add.image
+        });
+    }).catch(function(err) {
+        bot.replyInteractive(message, {
+            text: "Failed to add <" + to_add.provider_url + "|"  + to_add.title + ">! " + err,
+        });
+    });
+};
+
+var callbacks = {
+    'add_show': add_show
+};
+
+module.exports.interactiveHandler = function(bot, message) {
+    callbacks[message.callback_id](bot, message);
+};
+
 module.exports.searchHandler = function(bot, message) {
     var type = message.match[1];
     var search = message.match[2];
 
     metrics.searches_count.labels(type).inc();
 
-    bot.startConversation(message, function(err, convo) {
-        providers[type].search(search).then(function(results) {
-            var attachments = [];
-            var callbacks = [];
+    providers[type].search(search).then(function(results) {
+        var attachments = [];
 
-            results.forEach(function(result) {
-                attachments.push(create_attachment(result));
-
-                callbacks.push({
-                    pattern: result.tvdbid,
-                    callback: function(reply, convo) {
-                        metrics.added_count.labels(type).inc();
-                        providers[type].add(result).then(function(res) {
-                            convo.gotoThread(result.tvdbid);
-                        }).catch(function(err) {
-                            convo.setVar("error", err);
-                            convo.gotoThread(result.tvdbid + "_error");
-                        });
-                    }
-                });
-
-                convo.addMessage({
-                    title: "Added <" + result.provider_url + "|"  + result.title + ">!"
-                    thumb: result.image
-                }, result.tvdbid);
-
-                convo.addMessage({
-                    title: "Failed to add " + result.title + "!",
-                    text: "{{ vars.error }}"
-                }, result.tvdbid + "_error");
-            });
-
-            convo.addQuestion({ attachments: attachments }, callbacks);
-            convo.activate();
+        results.forEach(function(result) {
+            attachments.push(create_attachment(result));
+            result.type = type;
+            cache.put(result.tvdbid, result, 600000);
         });
+
+        bot.reply(message, { attachments: attachments });
     });
 
     metrics.completed_searches_count.labels(type).inc();
