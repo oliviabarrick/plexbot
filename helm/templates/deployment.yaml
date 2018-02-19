@@ -27,7 +27,7 @@ spec:
             - name: SLACK_CLIENT_SECRET
               value: {{ .Values.plexbot.slack_client_secret }}
             - name: SLACK_APP_URL
-              value: https://{{ index .Values.ingress.hosts 0 }}
+              value: https://{{ index .Values.ingress.hosts 0 }}/oauth
             - name: SONARR_TOKEN
               value: {{ .Values.plexbot.sonarr_token }}
             - name: SONARR_ADDRESS
