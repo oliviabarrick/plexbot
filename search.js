@@ -43,12 +43,18 @@ module.exports.searchHandler = function(bot, message) {
                         metrics.added_count.labels(type).inc();
                         providers[type].add(result).then(function(res) {
                             convo.gotoThread(result.tvdbid);
+                        }).catch(function(err) {
+                            convo.setVar("error", err);
                         });
                     }
                 });
 
                 convo.addMessage({
                     text: "Added " + result.title + "!"
+                }, result.tvdbid);
+
+                convo.addMessage({
+                    text: "Failed to add " + result.title + "! {{ vars.error }}"
                 }, result.tvdbid);
             });
 

@@ -55,5 +55,10 @@ module.exports.add = async function(show) {
     var json = await res.json();
     console.log('added show "' + show.title + '"');
     console.log(json);
+
+    if json.error {
+        throw new Error(json.error);
+    }
+
     return true
 }
