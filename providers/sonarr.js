@@ -56,7 +56,7 @@ module.exports.add = async function(show) {
     console.log('added show "' + show.title + '"');
     console.log(json);
 
-    if json.error != undefined {
+    if(json.error) {
         throw new Error(json.error);
     }
 
