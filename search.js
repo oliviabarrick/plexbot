@@ -35,8 +35,12 @@ var add_show = function(bot, message) {
 
     providers[to_add.type].add(to_add).then(function(res) {
         bot.replyInteractive(message, {
-            text: "Added <" + to_add.provider_url + "|"  + to_add.title + ">!",
-            thumb_url: to_add.image
+            attachments: [
+                {
+                    text: "Added <" + to_add.provider_url + "|"  + to_add.title + ">!",
+                    thumb_url: to_add.image
+                }
+            ]
         });
     }).catch(function(err) {
         bot.replyInteractive(message, {
