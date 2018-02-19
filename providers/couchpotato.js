@@ -6,8 +6,9 @@
 // * tvdbid
 // * description
 // * image: a link to the image that can be displayed in-line
+// * provider_url: link to resource in sonarr
 // * anything else add() needs to identify it when adding
-module.exports.search = function(query) {
+module.exports.search = async function(query) {
     return [
         {
             title: "The Blacklist", year: "1994", imdbid: "tt2741602", tvdbid: "12345",
@@ -24,7 +25,7 @@ module.exports.search = function(query) {
 
 // Create the show.
 // throw an error on error, otherwise returns nothing.
-module.exports.add = function(show) {
+module.exports.add = async function(show) {
     console.log('added show "' + show.title + '"');
     return true
 }

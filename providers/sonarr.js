@@ -12,6 +12,7 @@ var sonarr = process.env.SONARR_ADDRESS;
 // * tvdbid
 // * description
 // * image: a link to the image that can be displayed in-line
+// * provider_url: link to resource in sonarr
 // * anything else add() needs to identify it when adding
 module.exports.search = async function(query) {
     var qs = querystring.stringify({
@@ -24,8 +25,6 @@ module.exports.search = async function(query) {
     metrics.api_latency.labels('sonarr').observe(Date.now() - start);
 
     var json = await res.json();
-
-    console.log(json);
 
     json.forEach(function(series) {
         series.description = series.overview || "";
@@ -57,7 +56,6 @@ module.exports.add = async function(show) {
 
     var json = await res.json();
     console.log('added show "' + show.title + '"');
-    console.log(json);
 
     if(json.error) {
         throw new Error(json.error);
