@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plexbot-{{ .Release.Name }}
+spec:
+  capacity:
+    storage: 4Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-plexbot-{{ .Release.Name }}
+  nfs:
+    server: {{ .Values.plexbot.nfs.server }}
+    path: {{ .Values.plexbot.nfs.path }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: plexbot-{{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: nfs-plexbot-{{ .Release.Name }}

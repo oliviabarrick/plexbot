@@ -32,6 +32,8 @@ spec:
               value: {{ .Values.plexbot.sonarr_token }}
             - name: SONARR_ADDRESS
               value: {{ .Values.plexbot.sonarr_address }}
+            - name: PLEXBOT_DATABASE
+              value: /plexbot
           livenessProbe:
             httpGet:
               path: /
@@ -40,9 +42,16 @@ spec:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
+          volumeMounts:
+            - name: plexbot
+              mountPath: /plexbot
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
+      volumes:
+        - name: plexbot
+          persistentVolumeClaim:
+            claimName: plexbot-{{ .Release.Name }}

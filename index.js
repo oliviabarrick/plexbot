@@ -8,7 +8,7 @@ var events = 'direct_mention,direct_message';
 prometheus.collectDefaultMetrics({ timeout: 5000 });
 
 var controller = Botkit.slackbot({
-    json_file_store: './db_slackbutton_bot/',
+    json_file_store: process.env.PLEXBOT_DATABASE,
 }).configureSlackApp({
     clientId: process.env.SLACK_CLIENT_ID,
     clientSecret: process.env.SLACK_CLIENT_SECRET,
