@@ -20,29 +20,28 @@ function create_attachment(result) {
     };
 };
 
-module.exports.searchHandler = function(bot, message) {
+module.exports.searchHandler = async function(bot, message) {
     var type = message.match[1];
     var search = message.match[2];
 
-    providers[type].search(search).then(function(results) {
-        var attachments = [];
-        var options = {}
+    var attachments = [];
+    var callbacks = [];
 
+    providers[type].search(search).then(function(results) {
         results.forEach(function(result) {
-            options[result.tvdbid] = result;
             attachments.push(create_attachment(result));
+
+            callbacks.push({
+                pattern: result.tvdbid,
+                callback: function(reply, convo) {
+                    convo.say("response?");
+                    console.log("my callback");
+                }
+            })
         });
 
         bot.startConversation(message, function(err, convo) {
-            convo.ask({
-                attachments: attachments,
-            }, [
-                {
-                    default: true,
-                    callback: function(reply, convo) {
-                    }
-                }
-            ]);
+            convo.ask({ attachments: attachments }, callbacks);
         });
-    })
+    });
 }
