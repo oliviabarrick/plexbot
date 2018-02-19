@@ -7,5 +7,5 @@ npm install
 To run:
 
 ```
-node index.js
+npm start
 ```
