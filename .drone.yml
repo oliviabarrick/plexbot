@@ -20,7 +20,6 @@ pipeline:
     secrets: [ PROD_KUBERNETES_CERT, PROD_KUBERNETES_TOKEN, PROD_SERVICE_ACCOUNT, PROD_API_SERVER, PROD_SONARR_TOKEN, PROD_SLACK_CLIENT_ID, PROD_SLACK_CLIENT_SECRET ]
     prefix: PROD
     wait: true
-    debug: true
     when:
       branch: master
 
