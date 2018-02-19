@@ -1,5 +1,11 @@
 var prometheus = require('prom-client');
 
+module.exports.added_count = new prometheus.Counter({
+    name: 'added_count',
+    help: 'number of shows and movies added',
+    labelNames: ['type']
+});
+
 module.exports.searches_count = new prometheus.Counter({
     name: 'searches',
     help: 'number of searches performed',

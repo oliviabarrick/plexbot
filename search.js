@@ -32,23 +32,28 @@ module.exports.searchHandler = function(bot, message) {
 
     metrics.searches_count.labels(type).inc();
 
-    providers[type].search(search).then(function(results) {
-        results.forEach(function(result) {
-            attachments.push(create_attachment(result));
+    bot.startConversation(message, function(err, convo) {
+        providers[type].search(search).then(function(results) {
+            results.forEach(function(result) {
+                attachments.push(create_attachment(result));
 
-            callbacks.push({
-                pattern: result.tvdbid,
-                callback: function(reply, convo) {
-                    console.log(reply, convo);
-                    convo.say("response?");
-                    console.log("my callback for " + result.title);
-                }
-            })
+                callbacks.push({
+                    pattern: result.tvdbid,
+                    callback: function(reply, convo) {
+                        metrics.added_count.labels(type).inc();
+                        console.log("my callback for " + result.title);
+                        convo.gotoThread(result.tvdbid);
+                    }
+                });
+
+                convo.addMessage({
+                    text: "Adding " + result.title + "..."
+                }, result.tvdbid);
+            });
         });
 
-        bot.startConversation(message, function(err, convo) {
-            convo.ask({ attachments: attachments }, callbacks);
-        });
+        convo.addQuestion({ attachments: attachments }, callbacks);
+        convo.activate();
     });
 
     metrics.completed_searches_count.labels(type).inc();
