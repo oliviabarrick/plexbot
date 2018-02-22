@@ -46,10 +46,9 @@ module.exports.add = async function(movie) {
     var qs = querystring.stringify({
         title: movie.title,
         identifier: movie.imdbid,
-        force_readd: False
+        force_readd: false
     });
 
-    console.log('added show "' + show.title + '"');
     var res = await fetch(couchbase + "movie.add?" + qs);
     var json = await res.json();
 

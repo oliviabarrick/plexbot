@@ -44,6 +44,18 @@ var add_show = function(bot, message) {
 
     metrics.added_count.labels(to_add.type).inc();
 
+    if(to_add.already_added) {
+        bot.replyInteractive(message, {
+            attachments: [
+                {
+                    title: "<" + to_add.provider_url + "|"  + to_add.title + "> is already added!",
+                    text: to_add.description.slice(0, 250) + "...",
+                    thumb_url: to_add.image
+                }
+            ]
+        });
+    }
+
     providers[to_add.type].add(to_add).then(function(res) {
         bot.replyInteractive(message, {
             attachments: [
