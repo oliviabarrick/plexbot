@@ -17,7 +17,7 @@ var create_attachment = function(result) {
             {
                 name: 'Add show',
                 text: 'Add show',
-                value: result.tvdbid,
+                value: result.imdbid,
                 type: 'button'
             }
         ]
@@ -70,7 +70,7 @@ module.exports.searchHandler = function(bot, message) {
         results.forEach(function(result) {
             attachments.push(create_attachment(result));
             result.type = type;
-            cache.put(result.tvdbid, result, 600000);
+            cache.put(result.imdbid, result, 600000);
         });
 
         bot.reply(message, {

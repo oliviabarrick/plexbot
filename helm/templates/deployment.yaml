@@ -44,6 +44,12 @@ spec:
               value: "{{ .Values.plexbot.sonarr_root_folder }}"
             - name: SONARR_PUBLIC
               value: "{{ .Values.plexbot.sonarr_public }}"
+            - name: COUCHPOTATO_TOKEN
+              value: {{ .Values.plexbot.couchpotato_token }}
+            - name: COUCHPOTATO_ADDRESS
+              value: {{ .Values.plexbot.couchpotato_address }}
+            - name: COUCHPOTATO_PUBLIC
+              value: "{{ .Values.plexbot.couchpotato_public }}"
             - name: PLEXBOT_DATABASE
               value: /plexbot
           livenessProbe:

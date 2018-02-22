@@ -16,6 +16,9 @@ plexbot:
   sonarr_public: https://sonarr.bossco.de
   sonarr_root_folder: /tv/
   sonarr_profile_id: 3
+  couchpotato_token: ""
+  couchpotato_address: couchpotato-couchpotato.media.svc.cluster.local
+  couchpotato_public: https://couchpotato.bossco.de
 nfs:
   server: 10.13.37.5
   path: /plexbot
