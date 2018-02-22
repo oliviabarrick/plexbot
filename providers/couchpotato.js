@@ -36,7 +36,7 @@ module.exports.search = async function(query) {
         movie.provider_url = process.env.COUCHPOTATO_PUBLIC + "/" + movie.title;
     })
 
-    return json;
+    return json.movies;
 }
 
 // Create the show.
