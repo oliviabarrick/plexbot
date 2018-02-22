@@ -20,4 +20,7 @@ You must set:
 * `SONARR_PROFILE_ID`: sonarr quality profile (3 for HD)
 * `SONARR_ROOT_FOLDER`: sonarr root directory (e.g. /tv/).
 * `SONARR_PUBLIC`: sonarr public URL.
+* `COUCHPOTATO_TOKEN`: your couchpotato api token
+* `COUCHPOTATO_ADDRESS`: your couchpotato internal address
+* `COUCHPOTATO_PUBLIC`: your couchpotato public address
 * `PLEXBOT_DATABASE`: path to where plexbot should store oauth info.
