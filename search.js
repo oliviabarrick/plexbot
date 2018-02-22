@@ -54,6 +54,8 @@ var add_show = function(bot, message) {
                 }
             ]
         });
+
+        return;
     }
 
     providers[to_add.type].add(to_add).then(function(res) {

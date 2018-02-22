@@ -52,7 +52,9 @@ module.exports.add = async function(movie) {
     var res = await fetch(couchbase + "movie.add?" + qs);
     var json = await res.json();
 
-    console.log(json);
-
-    return true
+    if(json.success == true) {
+        return true
+    } else {
+        throw new Error("Could not add movie! " + JSON.stringify(json));
+    }
 }
