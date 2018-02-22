@@ -26,7 +26,7 @@ module.exports.search = async function(query) {
 
     var json = await res.json();
 
-    json.forEach(function(movie) {
+    json.movies.forEach(function(movie) {
         movie.title = movie.original_title;
         movie.description = movie.plot || "";
         movie.imdbid = movie.imdb;
