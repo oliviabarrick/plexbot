@@ -30,8 +30,8 @@ module.exports.search = async function(query) {
         movie.title = movie.original_title;
         movie.description = movie.plot || "";
         movie.imdbid = movie.imdb;
-        if(movies.images.poster_original) {
-            movie.image = movies.images.poster_original[0];
+        if(movie.images.poster_original) {
+            movie.image = movie.images.poster_original[0];
         }
         movie.provider_url = process.env.COUCHPOTATO_PUBLIC + "/" + movie.title;
     })
