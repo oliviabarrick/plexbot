@@ -34,14 +34,26 @@ module.exports.search = async function(query) {
             movie.image = movie.images.poster_original[0];
         }
         movie.provider_url = process.env.COUCHPOTATO_PUBLIC + "/" + movie.title;
-    })
+        movie.already_added = (movie.in_library || movie.in_wanted) ? true : false;
+    });
 
     return json.movies;
 }
 
 // Create the show.
 // throw an error on error, otherwise returns nothing.
-module.exports.add = async function(show) {
+module.exports.add = async function(movie) {
+    var qs = querystring.stringify({
+        title: movie.title,
+        identifier: movie.imdbid,
+        force_readd: False
+    });
+
     console.log('added show "' + show.title + '"');
+    var res = await fetch(couchbase + "movie.add?" + qs);
+    var json = await res.json();
+
+    console.log(json);
+
     return true
 }

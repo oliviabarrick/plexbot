@@ -7,20 +7,31 @@ var providers = {
 }
 
 var create_attachment = function(result) {
+    var actions = [];
+
+    if(!result.already_added) {
+        actions.push({
+            name: 'Add',
+            text: 'Add',
+            value: result.imdbid,
+            type: 'button'
+        });
+    } else {
+        actions.push({
+            name: 'Already added',
+            text: 'Already added',
+            value: result.imdbid,
+            type: 'button'
+        });
+    }
+
     return {
         title: '<http://www.imdb.com/title/' + result.imdbid + "|" + result.title + "> (" + result.year + ")",
         text: result.description.slice(0, 250) + "...",
         thumb_url: result.image,
         name: result.title,
         callback_id: 'add_show',
-        actions: [
-            {
-                name: 'Add show',
-                text: 'Add show',
-                value: result.imdbid,
-                type: 'button'
-            }
-        ]
+        actions: actions
     };
 };
 
