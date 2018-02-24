@@ -1,5 +1,5 @@
 var metrics = require('./metrics');
-var args = require('./args');
+var argparser = require('./args');
 var cache = require('memory-cache');
 
 var providers = {
