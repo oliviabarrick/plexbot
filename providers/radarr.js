@@ -4,6 +4,13 @@ var metrics = require('../metrics')
 
 var radarr = process.env.RADARR_ADDRESS
 
+var qualities = {
+  standard: 1,
+  hd: 4,
+  uhd: 5,
+  '4k': 5
+}
+
 // Send a query to the provider and return the results as an array.
 // A single result item in the array should include:
 // * title
@@ -27,7 +34,11 @@ module.exports.search = async function (query, config) {
   var json = await res.json()
 
   json.forEach(function (movie) {
-    movie.qualityDesired = config.quality
+    if (config.quality) {
+      config.quality = config.quality.toLowerCase()
+    }
+
+    movie.qualityDesired = qualities[config.quality] || config.quality
     movie.description = movie.overview || ''
     movie.imdbid = movie.tmdbId
     movie.image = movie.remotePoster
@@ -45,6 +56,7 @@ module.exports.add = async function (movie) {
     ignoreEpisodesWithoutFiles: false,
     searchForMovie: true
   }
+  movie.monitored = true
   movie.rootFolderPath = process.env.RADARR_ROOT_FOLDER
   movie.profileId = parseInt(movie.qualityDesired || process.env.RADARR_PROFILE_ID)
 
