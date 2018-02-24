@@ -40,6 +40,11 @@ module.exports.search = async function (query, config) {
 // Create the show.
 // throw an error on error, otherwise returns nothing.
 module.exports.add = async function (movie) {
+  movie.addOptions = {
+    ignoreEpisodesWithFiles: false,
+    ignoreEpisodesWithoutFiles: false,
+    searchForMovie: true
+  };
   movie.rootFolderPath = process.env.RADARR_ROOT_FOLDER
   movie.profileId = parseInt(movie.qualityDesired || process.env.RADARR_PROFILE_ID)
 

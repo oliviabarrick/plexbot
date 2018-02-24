@@ -4,8 +4,8 @@ var cache = require('memory-cache')
 
 var providers = {
   'tv': require('./providers/sonarr'),
-  'movie': require('./providers/couchpotato'),
-  'radarr': require('./providers/radarr')
+  'movie': require('./providers/radarr'),
+  'couchpotato': require('./providers/couchpotato')
 }
 
 var createAttachment = function (result) {
