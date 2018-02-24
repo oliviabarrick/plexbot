@@ -50,6 +50,16 @@ spec:
               value: {{ .Values.plexbot.couchpotato_address }}
             - name: COUCHPOTATO_PUBLIC
               value: "{{ .Values.plexbot.couchpotato_public }}"
+            - name: RADARR_TOKEN
+              value: {{ .Values.plexbot.radarr_token }}
+            - name: RADARR_ADDRESS
+              value: {{ .Values.plexbot.radarr_address }}
+            - name: RADARR_PROFILE_ID
+              value: "{{ .Values.plexbot.radarr_profile_id }}"
+            - name: RADARR_ROOT_FOLDER
+              value: "{{ .Values.plexbot.radarr_root_folder }}"
+            - name: RADARR_PUBLIC
+              value: "{{ .Values.plexbot.radarr_public }}"
             - name: PLEXBOT_DATABASE
               value: /plexbot
           livenessProbe:

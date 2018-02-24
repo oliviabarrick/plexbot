@@ -19,7 +19,12 @@ You must set:
 * `SONARR_ADDRESS`: sonarr address
 * `SONARR_PROFILE_ID`: sonarr quality profile (3 for HD)
 * `SONARR_ROOT_FOLDER`: sonarr root directory (e.g. /tv/).
-* `SONARR_PUBLIC`: sonarr public URL.
+* `RADARR_PUBLIC`: radarr public URL.
+* `RADARR_TOKEN`: the radarr api token
+* `RADARR_ADDRESS`: radarr address
+* `RADARR_PROFILE_ID`: radarr quality profile (0 for all)
+* `RADARR_ROOT_FOLDER`: radarr root directory (e.g. /movies/).
+* `RADARR_PUBLIC`: radarr public URL.
 * `COUCHPOTATO_TOKEN`: your couchpotato api token
 * `COUCHPOTATO_ADDRESS`: your couchpotato internal address
 * `COUCHPOTATO_PUBLIC`: your couchpotato public address

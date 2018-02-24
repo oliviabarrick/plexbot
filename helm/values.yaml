@@ -19,6 +19,11 @@ plexbot:
   couchpotato_token: ""
   couchpotato_address: couchpotato-couchpotato.media.svc.cluster.local
   couchpotato_public: https://couchpotato.bossco.de
+  radarr_token: ""
+  radarr_address: radarr-radarr.media.svc.cluster.local
+  radarr_public: https://radarr.bossco.de
+  radarr_root_folder: /movies/
+  radarr_profile_id: 0
 nfs:
   server: 10.13.37.5
   path: /plexbot
