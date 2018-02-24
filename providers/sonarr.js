@@ -4,12 +4,6 @@ var metrics = require('../metrics')
 
 var sonarr = process.env.SONARR_ADDRESS
 
-var qualities = {
-  standard: 3,
-  uhd: 1,
-  '4k': 1
-}
-
 // Send a query to the provider and return the results as an array.
 // A single result item in the array should include:
 // * title
@@ -20,7 +14,7 @@ var qualities = {
 // * image: a link to the image that can be displayed in-line
 // * provider_url: link to resource in sonarr
 // * anything else add() needs to identify it when adding
-module.exports.search = async function (query, config) {
+module.exports.search = async function (query) {
   var qs = querystring.stringify({
     term: query,
     apikey: process.env.SONARR_TOKEN
@@ -33,12 +27,6 @@ module.exports.search = async function (query, config) {
   var json = await res.json()
 
   json.forEach(function (series) {
-    if (config.quality) {
-      config.quality = config.quality.toLowerCase()
-    }
-
-    series.qualityDesired = qualities[config.quality] || config.quality
-
     series.description = series.overview || ''
     series.tvdbid = series.tvdbId
     series.imdbid = series.imdbId
@@ -58,7 +46,7 @@ module.exports.add = async function (show) {
     searchForMissingEpisodes: true
   }
   show.rootFolderPath = process.env.SONARR_ROOT_FOLDER
-  show.profileId = parseInt(show.qualityDesired || process.env.SONARR_PROFILE_ID)
+  show.profileId = parseInt(process.env.SONARR_PROFILE_ID)
 
   var res = await fetch('http://' + sonarr + '/api/series?apikey=' + process.env.SONARR_TOKEN, {
     method: 'POST',
