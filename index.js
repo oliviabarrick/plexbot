@@ -2,7 +2,7 @@ var Botkit = require('botkit')
 var search = require('./search')
 var prometheus = require('prom-client')
 
-var triggers = ['^add (tv|movie|radarr) (.*)$']
+var triggers = ['^add (tv|movie|couchpotato) (.*)$']
 var events = 'direct_mention,direct_message'
 
 prometheus.collectDefaultMetrics({ timeout: 5000 })
