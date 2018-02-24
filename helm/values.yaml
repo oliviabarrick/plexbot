@@ -23,7 +23,7 @@ plexbot:
   radarr_address: radarr-radarr.media.svc.cluster.local
   radarr_public: https://radarr.bossco.de
   radarr_root_folder: /movies/
-  radarr_profile_id: 0
+  radarr_profile_id: 1
 nfs:
   server: 10.13.37.5
   path: /plexbot
