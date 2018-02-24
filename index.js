@@ -19,7 +19,7 @@ var controller = Botkit.slackbot({
 controller.setupWebserver(8889, function (err, expressWebserver) {
   if (err) {
     console.log(err)
-    process.exit()
+    process.exit(1)
   }
 
   controller.createWebhookEndpoints(expressWebserver)
@@ -44,7 +44,7 @@ controller.on('create_bot', function (bot, config) {
   bot.startRTM(function (err) {
     if (err) {
       console.log(err)
-      process.exit()
+      process.exit(1)
     }
   })
 })
@@ -55,7 +55,7 @@ controller.hears(triggers, events, search.searchHandler)
 controller.storage.teams.all(function (err, teams) {
   if (err) {
     console.log(err)
-    process.exit()
+    process.exit(1)
   }
 
   for (var t in teams) {
