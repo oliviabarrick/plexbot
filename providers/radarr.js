@@ -14,7 +14,7 @@ var radarr = process.env.RADARR_ADDRESS
 // * image: a link to the image that can be displayed in-line
 // * provider_url: link to resource in ranarr
 // * anything else add() needs to identify it when adding
-module.exports.search = async function (query) {
+module.exports.search = async function (query, config) {
   var qs = querystring.stringify({
     term: query,
     apikey: process.env.RADARR_TOKEN
@@ -27,6 +27,7 @@ module.exports.search = async function (query) {
   var json = await res.json()
 
   json.forEach(function (movie) {
+    movie.qualityDesired = config.quality
     movie.description = movie.overview || ''
     movie.imdbid = movie.tmdbId
     movie.image = movie.remotePoster
@@ -40,7 +41,7 @@ module.exports.search = async function (query) {
 // throw an error on error, otherwise returns nothing.
 module.exports.add = async function (movie) {
   movie.rootFolderPath = process.env.RADARR_ROOT_FOLDER
-  movie.profileId = parseInt(process.env.RADARR_PROFILE_ID)
+  movie.profileId = parseInt(movie.qualityDesired || process.env.RADARR_PROFILE_ID)
 
   var res = await fetch('http://' + radarr + '/api/movie?apikey=' + process.env.RADARR_TOKEN, {
     method: 'POST',
