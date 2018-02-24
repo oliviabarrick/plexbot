@@ -8,3 +8,4 @@ RUN npm install
 
 CMD npm start
 COPY . /home/node/app/
+RUN npm test

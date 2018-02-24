@@ -1,14 +1,14 @@
-var argparser = require('argparse');
+var argparser = require('argparse')
 
 var parser = new argparser.ArgumentParser({
-    prog: 'plexbot'
-});
+  prog: 'plexbot'
+})
 
-parser.addArgument(['--quality']);
-parser.addArgument(['search'], {nargs: '+'});
+parser.addArgument(['--quality'])
+parser.addArgument(['search'], {nargs: '+'})
 
-parser.exit = function(status, message){};
+parser.exit = function (status, message) {}
 
-module.exports.parse = function(args) {
-    return parser.parseArgs(arg);
-};
+module.exports.parse = function (args) {
+  return parser.parseArgs(args)
+}
