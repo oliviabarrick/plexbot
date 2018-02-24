@@ -87,9 +87,7 @@ module.exports.interactiveHandler = function (bot, message) {
 
 module.exports.searchHandler = function (bot, message) {
   var type = message.match[1]
-  var args = message.match[2]
-
-  args = argparser.parse(args)
+  var args = argparser.parse(message.match[2].split(' '))
 
   metrics.searches_count.labels(type).inc()
 
