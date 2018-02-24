@@ -9,6 +9,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "argparse": "^1.0.10",
     "botkit": "^0.6.11",
     "memory-cache": "^0.2.0",
     "node-fetch": "^2.0.0",

@@ -1,4 +1,5 @@
 var metrics = require('./metrics');
+var args = require('./args');
 var cache = require('memory-cache');
 
 var providers = {
@@ -86,11 +87,13 @@ module.exports.interactiveHandler = function(bot, message) {
 
 module.exports.searchHandler = function(bot, message) {
     var type = message.match[1];
-    var search = message.match[2];
+    var args = message.match[2];
+
+    args = argparser.parse(args);
 
     metrics.searches_count.labels(type).inc();
 
-    providers[type].search(search).then(function(results) {
+    providers[type].search(args.search, args).then(function(results) {
         var attachments = [];
 
         results.forEach(function(result) {
