@@ -91,7 +91,7 @@ module.exports.searchHandler = function (bot, message) {
 
   metrics.searches_count.labels(type).inc()
 
-  providers[type].search(args.search, args).then(function (results) {
+  providers[type].search(args.search.join(' '), args).then(function (results) {
     var attachments = []
 
     results.forEach(function (result) {
