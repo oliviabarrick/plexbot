@@ -24,9 +24,6 @@ plexbot:
   radarr_public: https://radarr.bossco.de
   radarr_root_folder: /movies/
   radarr_profile_id: 1
-nfs:
-  server: 10.13.37.5
-  path: /plexbot
 ingress:
   enabled: true
   hosts:
@@ -40,6 +37,7 @@ ingress:
     - secretName: codesink-origin-ca
       hosts:
         - plexbot.codesink.net
+storageClass: ceph-rbd
 resources: {}
   # limits:
   #  cpu: 100m
