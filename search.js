@@ -101,7 +101,7 @@ module.exports.searchHandler = function (bot, message) {
     })
 
     bot.reply(message, {
-      text: 'Your results for "' + args.search + '":',
+      text: 'Your results for "' + args.search.join(' ') + '":',
       attachments: attachments
     })
   })
