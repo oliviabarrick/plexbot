@@ -37,7 +37,7 @@ ingress:
     - secretName: codesink-origin-ca
       hosts:
         - plexbot.codesink.net
-storageClass: ceph-rbd
+storageClass: rook-block
 resources: {}
   # limits:
   #  cpu: 100m
