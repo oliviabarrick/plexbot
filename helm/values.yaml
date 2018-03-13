@@ -13,15 +13,15 @@ plexbot:
   slack_client_secret: ""
   sonarr_token: ""
   sonarr_address: sonarr-sonarr.media.svc.cluster.local
-  sonarr_public: https://sonarr.bossco.de
+  sonarr_public: https://sonarr.media.bossco.de
   sonarr_root_folder: /tv/
   sonarr_profile_id: 3
   couchpotato_token: ""
   couchpotato_address: couchpotato-couchpotato.media.svc.cluster.local
-  couchpotato_public: https://couchpotato.bossco.de
+  couchpotato_public: https://couchpotato.media.bossco.de
   radarr_token: ""
   radarr_address: radarr-radarr.media.svc.cluster.local
-  radarr_public: https://radarr.bossco.de
+  radarr_public: https://radarr.media.bossco.de
   radarr_root_folder: /movies/
   radarr_profile_id: 1
 ingress:
