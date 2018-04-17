@@ -49,6 +49,11 @@ controller.on('create_bot', function (bot, config) {
   })
 })
 
+controller.on('rtm_close', function(bot) {
+  console.log('Slack connection closed!')
+  process.exit(1)
+})
+
 controller.on('interactive_message_callback', search.interactiveHandler)
 controller.hears(triggers, events, search.searchHandler)
 
