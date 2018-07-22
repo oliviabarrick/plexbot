@@ -57,16 +57,25 @@ module.exports = class extends Bot {
   }
 
   reply (bot, message, text, attachments) {
-    bot.reply(message, {
+    var reply = {
       attachment: {
         type: 'template',
         payload: {
-          template_type: 'list',
-          top_element_style: 'compact',
           elements: attachments.slice(0, 4)
         }
       }
-    }, function (err, res) {
+    }
+
+    if (!attachments || attachments.length === 0) {
+      reply = text
+    } else if (attachments.length === 1) {
+      reply.attachment.payload.template_type = 'generic'
+    } else {
+      reply.attachment.payload.top_element_style = 'compact'
+      reply.attachment.payload.template_type = 'list'
+    }
+
+    bot.reply(message, reply, function (err, res) {
       if (err) {
         console.log('Error sending reply:', err)
       }

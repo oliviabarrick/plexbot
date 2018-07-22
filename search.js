@@ -74,6 +74,10 @@ module.exports = function (controller) {
         })
 
         var body = 'Your results for "' + args.search.join(' ') + '":'
+        if (attachments.length === 0) {
+          body = 'No results for "' + args.search.join(' ') + '".'
+        }
+
         controller.reply(bot, message, body, attachments)
       })
 
