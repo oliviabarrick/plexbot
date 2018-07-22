@@ -12,6 +12,17 @@ module.exports = class extends Bot {
     })
   }
 
+  setup (webserver) {
+    super.setup(webserver)
+
+    var hello = function (bot, message) {
+      bot.reply(message, 'Welcome to plexbot!\n\nTo search for a TV show, send "add tv show name"\nTo search for a movie, send "add movie movie name"')
+    }
+
+    this.controller.on('facebook_optin', hello)
+    this.controller.hears(['^[Hh]elp.*', '[?]'], 'message_received', hello)
+  }
+
   setupWebserver (expressWebserver) {
     var bot = this.controller.spawn({})
 
