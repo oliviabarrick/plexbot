@@ -14,6 +14,7 @@ var addShow = function (controller, bot, cacheKey, message) {
   if (toAdd == null) {
     controller.replyInteractive(bot, message, 'Error!',
       'Search timed out, try searching again?')
+    return
   }
 
   var description = toAdd.description.slice(0, 250) + '...'
