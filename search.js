@@ -8,72 +8,38 @@ var providers = {
   'couchpotato': require('./providers/couchpotato')
 }
 
-var createAttachment = function (result) {
-  var actions = []
-
-  if (!result.already_added) {
-    actions.push({
-      name: 'Add',
-      text: 'Add',
-      value: result.imdbid,
-      type: 'button'
-    })
-  } else {
-    actions.push({
-      name: 'Already added',
-      text: 'Already added',
-      value: result.imdbid,
-      type: 'button'
-    })
-  }
-
-  return {
-    title: '<http://www.imdb.com/title/' + result.imdbid + '|' + result.title + '> (' + result.year + ')',
-    text: result.description.slice(0, 250) + '...',
-    thumb_url: result.image,
-    name: result.title,
-    callback_id: 'add_show',
-    actions: actions
-  }
-}
-
-var addShow = function (bot, message) {
-  var toAdd = cache.get(message.actions[0].value)
+var addShow = function (controller, bot, cacheKey, message) {
+  var toAdd = cache.get(cacheKey)
 
   if (toAdd == null) {
-    bot.replyInteractive(message, 'unknown callback')
+    controller.replyInteractive(bot, message, 'Error!',
+      'Search timed out, try searching again?')
   }
+
+  var description = toAdd.description.slice(0, 250) + '...'
 
   metrics.added_count.labels(toAdd.type).inc()
 
   if (toAdd.already_added) {
-    bot.replyInteractive(message, {
-      attachments: [
-        {
-          title: '<' + toAdd.provider_url + '|' + toAdd.title + '> is already added!',
-          text: toAdd.description.slice(0, 250) + '...',
-          thumb_url: toAdd.image
-        }
-      ]
-    })
-
+    var title = toAdd.title + ' is already added!'
+    controller.replyInteractive(bot, message, title, description,
+      toAdd.image, toAdd.provider_url)
     return
   }
 
   providers[toAdd.type].add(toAdd).then(function (res) {
-    bot.replyInteractive(message, {
-      attachments: [
-        {
-          title: 'Added <' + toAdd.provider_url + '|' + toAdd.title + '>!',
-          text: toAdd.description.slice(0, 250) + '...',
-          thumb_url: toAdd.image
-        }
-      ]
-    })
+    var title = 'Added ' + toAdd.title + '!'
+    controller.replyInteractive(bot, message, title, description, toAdd.image,
+      toAdd.provider_url)
   }).catch(function (err) {
-    bot.replyInteractive(message, {
-      text: 'Failed to add <' + toAdd.provider_url + '|' + toAdd.title + '>! ' + err
-    })
+    if (err.toString().includes('has already been added')) {
+      var title = toAdd.title + ' is already added!'
+      controller.replyInteractive(bot, message, title, description, toAdd.image,
+        toAdd.provider_url)
+    } else {
+      var text = 'Failed to add ' + toAdd.title + '!\n' + err
+      controller.replyInteractive(bot, message, 'Error!', text)
+    }
   })
 }
 
@@ -81,30 +47,36 @@ var callbacks = {
   'add_show': addShow
 }
 
-module.exports.interactiveHandler = function (bot, message) {
-  callbacks[message.callback_id](bot, message)
-}
+module.exports = function (controller) {
+  return {
+    interactiveHandler: function (bot, message) {
+      console.log('interactive received: ', message)
 
-module.exports.searchHandler = function (bot, message) {
-  var type = message.match[1]
-  var args = argparser.parse(message.match[2].split(' '))
+      var resp = controller.parseCallbackResponse(message)
 
-  metrics.searches_count.labels(type).inc()
+      callbacks[resp.callback_id](controller, bot, resp.cache_key, message)
+    },
+    searchHandler: function (bot, message) {
+      console.log('received: ', message)
+      var type = message.match[1].toLowerCase()
+      var args = argparser.parse(message.match[2].split(' '))
 
-  providers[type].search(args.search.join(' '), args).then(function (results) {
-    var attachments = []
+      metrics.searches_count.labels(type).inc()
 
-    results.forEach(function (result) {
-      attachments.push(createAttachment(result))
-      result.type = type
-      cache.put(result.imdbid, result, 600000)
-    })
+      providers[type].search(args.search.join(' '), args).then(function (results) {
+        var attachments = []
 
-    bot.reply(message, {
-      text: 'Your results for "' + args.search.join(' ') + '":',
-      attachments: attachments
-    })
-  })
+        results.forEach(function (result) {
+          attachments.push(controller.addResult(result))
+          result.type = type
+          cache.put(result.imdbid, result, 600000)
+        })
 
-  metrics.completed_searches_count.labels(type).inc()
+        var body = 'Your results for "' + args.search.join(' ') + '":'
+        controller.reply(bot, message, body, attachments)
+      })
+
+      metrics.completed_searches_count.labels(type).inc()
+    }
+  }
 }
