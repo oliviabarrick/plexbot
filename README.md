@@ -40,3 +40,4 @@ You can add any users as "Testers" in your Facebook application without publishi
 
 Make sure to add your `RADARR_PUBLIC` and `SONARR_PUBLIC` URLs to the application's
 Messenger whitelist.
+
